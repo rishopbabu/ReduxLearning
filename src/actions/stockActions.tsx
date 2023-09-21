@@ -56,7 +56,8 @@ export const getStocksData = () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      dispatch(getStocksSuccess(data.data)); // Assuming your data is wrapped in a 'data' property
+      console.log('Data', JSON.stringify(data, null, 2))
+      dispatch(getStocksSuccess(data.data));
     } catch (error: any) {
       dispatch(getStocksFailure(error.message));
     }
