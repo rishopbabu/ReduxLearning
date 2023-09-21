@@ -12,5 +12,13 @@ export interface Stock {
 }
 
 export interface GetStocksSuccessAction {
-    
+    type: typeof GET_STOCKS_SUCCESS;
+    payload: Stock[];
 }
+
+export interface GetStockFailureAction {
+    type: typeof GET_STOCKS_FAILURE;
+    payload: string;
+}
+
+export type StockActionTypes = GetStocksSuccessAction | GetStockFailureAction;
