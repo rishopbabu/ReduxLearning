@@ -21,29 +21,6 @@ export const getStocksFailure = (error: string): StockActionTypes => ({
   payload: error,
 });
 
-// export const getStockData = () => {
-//     return async (dispatch: Dispatch<StockActionTypes>) => {
-//         try {
-//             const response = await fetch(API_URL, {
-//                 method: 'GET',
-//                 headers: headers,
-//             })
-//             if(!response.ok) {
-//                 throw new Error('Network response was not ok')
-//             }
-//             const data = await response.json();
-//             if (typeof data === 'string') {
-//                 dispatch(getStocksFailure(data.toString()));
-//               } else {
-//                 dispatch(getStocksSuccess(data));
-//               }
-//             dispatch(getStocksSuccess(data))
-//         } catch (error: any) {
-//             dispatch(getStocksFailure(error.message.toString()))
-//         }
-//     }
-// }
-
 export const getStocksData = () => {
   return async (dispatch: Dispatch<StockActionTypes>) => {
     try {
@@ -56,7 +33,6 @@ export const getStocksData = () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log('Data', JSON.stringify(data, null, 2))
       dispatch(getStocksSuccess(data.data));
     } catch (error: any) {
       dispatch(getStocksFailure(error.message));
