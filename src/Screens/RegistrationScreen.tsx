@@ -1,8 +1,15 @@
 // RegistrationScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../redux/register/registerAction';
 
 const RegistrationScreen = () => {
+  const dispatch = useDispatch();
+
+  const userData = useSelector((state: any) => state.payload);
+  const error = useSelector((state: any) => state.error);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -16,6 +23,7 @@ const RegistrationScreen = () => {
     console.log('Email:', email);
     console.log('Phone:', phone);
     console.log('Password:', password);
+    dispatch(register(name,email,phone,password));
   };
 
   return (

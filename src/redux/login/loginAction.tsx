@@ -1,13 +1,12 @@
-// authActions.ts
-
 import axios from 'axios';
 import {Dispatch} from 'redux';
 import {LOGIN_SUCCESS, LOGIN_FAILURE} from './loginType';
+import {config} from '../../Constants';
 
 export const login =
   (username: string, password: string) => async (dispatch: Dispatch) => {
     try {
-      const url = 'https://fastapi-rishop.onrender.com/login';
+      const url = config.url.AUTH_URL;
       const requestBody = new URLSearchParams();
       requestBody.append('grant_type', 'password');
       requestBody.append('username', username);
@@ -27,6 +26,6 @@ export const login =
         payload: error.message,
       });
     } finally {
-      console.log("Finnaly stamt")
+      console.log('Finnaly statement executed');
     }
   };

@@ -1,4 +1,4 @@
-import { AuthActionTypes, LOGIN_SUCCESS, LOGIN_FAILURE } from './loginType';
+import {AuthActionTypes, LOGIN_SUCCESS, LOGIN_FAILURE} from './loginType';
 
 interface AuthState {
   token: string | null;
@@ -10,7 +10,10 @@ const initialState: AuthState = {
   error: null,
 };
 
-const loginReducer = (state = initialState, action: AuthActionTypes): AuthState => {
+const loginReducer = (
+  state = initialState,
+  action: AuthActionTypes,
+): AuthState => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {
