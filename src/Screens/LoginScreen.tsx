@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import {View, Text, TextInput, Button, StyleSheet} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/login/loginAction';
-import { RootState } from '../store/configureStore';
 
-const LoginScreen: React.FC = () => {
+const LoginScreen = () => {
     const dispatch = useDispatch();
-    const token = useSelector((state: RootState) => state.auth.token);
-    const error = useSelector((state: RootState) => state.auth.error);
+    const token = useSelector((state: any) => state.token);
+    const error = useSelector((state: any) => state.error);
+    const isLoading = useSelector((state: any) => state.loading);
   
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -20,12 +20,6 @@ const LoginScreen: React.FC = () => {
   const handleLogin = async () => {
     dispatch(login(username, password));
   };
-
-  const handleRegister () => {
-    
-  }
-  console.log("token: ", token)
-  console.log("error: ", error)
 
   return (
     <View style={styles.container}>

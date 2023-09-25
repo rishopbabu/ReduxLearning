@@ -6,8 +6,6 @@ import {LOGIN_SUCCESS, LOGIN_FAILURE} from './loginType';
 
 export const login =
   (username: string, password: string) => async (dispatch: Dispatch) => {
-    console.log('username: ', username);
-    console.log('password: ', password);
     try {
       const url = 'https://fastapi-rishop.onrender.com/login';
       const requestBody = new URLSearchParams();
@@ -28,5 +26,7 @@ export const login =
         type: LOGIN_FAILURE,
         payload: error.message,
       });
+    } finally {
+      console.log("Finnaly stamt")
     }
   };
