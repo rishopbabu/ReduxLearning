@@ -6,6 +6,7 @@ import {
 } from '../types/stockTypes';
 
 interface StockState {
+  auth: any;
   data: Stock[];
   loading: boolean;
   error: string | null;
