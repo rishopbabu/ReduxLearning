@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-const LoginSuccessful = () => {
+const HomeScreen = () => {
   return (
     <View>
       <Text>Logged in Successful!</Text>
@@ -9,4 +9,4 @@ const LoginSuccessful = () => {
   );
 };
 
-export default LoginSuccessful;
+export default HomeScreen;
