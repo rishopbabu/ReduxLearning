@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import PostScreen from './PostsScreen';
 import ProfileScreen from './ProfileScreen';
+import { UsersScreen } from './UsersScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -37,6 +38,21 @@ function MaterialTabs() {
           ),
         }}
       />
+      <Tab.Screen
+        name="Users"
+        component={UsersScreen}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <CustomTabIcon
+              imageSource={
+                focused
+                  ? require('/Users/mac-obs-51/Documents/RN Learning/ReduxLearning/src/assets/person.3.fill.png')
+                  : require('/Users/mac-obs-51/Documents/RN Learning/ReduxLearning/src/assets/person.3.sequence.png')
+              }
+            />
+          ),
+        }}
+      />
 
       <Tab.Screen
         name="My Profile"
@@ -58,9 +74,7 @@ function MaterialTabs() {
 }
 
 const HomeScreen = () => {
-  return (
-      <MaterialTabs />
-  );
+  return <MaterialTabs />;
 };
 
 const styles = StyleSheet.create({

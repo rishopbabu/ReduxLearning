@@ -1,15 +1,21 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllPosts} from '../redux/posts/postsAction';
 import {NavigationProp} from '@react-navigation/native';
 
 const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
-  
   const access_token = useSelector(
     (state: any) => state?.userDataReducer?.payload?.access_token,
   );
-  
+
   const posts_data = useSelector(
     (state: any) => state?.postsDataReducer?.payload,
   );
@@ -40,6 +46,42 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
     fetchAllPosts();
   }, []);
 
+  const flatListComponent = (item: any) => {
+    return (
+      <View style={styles.postContainer}>
+        <Text style={styles.postUserDetail}>
+          {item?.Post?.user_detail?.name}
+        </Text>
+
+        <Text style={styles.postTitle}>{item.Post.title}</Text>
+
+        <Text style={styles.postContent}>{item.Post.content}</Text>
+
+        <View style={styles.voteContainer}>
+          <Text style={styles.postVotes}>Votes: {item.votes}</Text>
+
+          <View style={styles.voteButtonsContainer}>
+            <TouchableOpacity
+              style={styles.voteButton}
+              onPress={() => {
+                // Implement the plus button functionality
+              }}>
+              <Text style={styles.voteButtonText}>Like</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.voteButton}
+              onPress={() => {
+                // Implement the share button functionality
+              }}>
+              <Text style={styles.voteButtonText}>Share</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -59,50 +101,7 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
         showsVerticalScrollIndicator={false}
         data={posts_data}
         keyExtractor={item => item.Post.id.toString()}
-        renderItem={({item}) => (
-          <View style={styles.postContainer}>
-            {/* User Detail */}
-            <Text style={styles.postUserDetail}>
-              {item?.Post?.user_detail?.name}
-            </Text>
-
-            {/* Title */}
-            <Text style={styles.postTitle}>{item.Post.title}</Text>
-
-            {/* Content */}
-            <Text style={styles.postContent}>{item.Post.content}</Text>
-
-            {/* Votes */}
-            <View style={styles.voteContainer}>
-              <Text style={styles.postVotes}>Votes: {item.votes}</Text>
-
-              {/* Plus and Minus Buttons */}
-              <View style={styles.voteButtonsContainer}>
-                <TouchableOpacity
-                  style={styles.voteButton}
-                  onPress={() => {
-                    // Implement the plus button functionality
-                  }}>
-                  <Text style={styles.voteButtonText}>Like</Text>
-                </TouchableOpacity>
-                {/* <TouchableOpacity
-                  style={styles.voteButton}
-                  onPress={() => {
-                    // Implement the minus button functionality
-                  }}>
-                  <Text style={styles.voteButtonText}>Comment</Text>
-                </TouchableOpacity> */}
-                <TouchableOpacity
-                  style={styles.voteButton}
-                  onPress={() => {
-                    // Implement the share button functionality
-                  }}>
-                  <Text style={styles.voteButtonText}>Share</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        )}
+        renderItem={({item}) => flatListComponent(item)}
       />
     </View>
   );
