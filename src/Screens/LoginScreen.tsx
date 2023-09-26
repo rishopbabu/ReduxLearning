@@ -11,11 +11,6 @@ const LoginScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // useEffect(() => {
-  //   setUsername('rishop@yopmail.com')
-  //   setPassword('Rishop@123')
-  // }, []);
-
   const showAlert = (title: string, message: string, callback?: () => void) => {
     Alert.alert(title, message, [
       {
