@@ -46,10 +46,10 @@ const LoginScreen = ({navigation}) => {
     <View style={styles.container}>
       <Text style={styles.header}>Login</Text>
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Username</Text>
+        <Text style={styles.label}>e-Mail</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter your username"
+          placeholder="Enter your e-Mail"
           onChangeText={text => setUsername(text)}
           value={username}
         />
