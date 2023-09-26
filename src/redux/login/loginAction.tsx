@@ -13,15 +13,11 @@ export const login =
       requestBody.append('password', password);
 
       const response = await axios.post(url, requestBody.toString());
-      console.log('response:', response.data);
-      if (response && response.data && response.data.access_token) {
-        const {access_token, user_details} = response.data;
+      userDetails(response.data)(dispatch);
+      if (response && response.data) {
         dispatch({
           type: LOGIN_SUCCESS,
-          payload: {
-            access_token,
-            user_details,
-          },
+          payload: response.data
         });
       } else {
         dispatch({
@@ -44,3 +40,10 @@ export const login =
       console.log('Finnaly statement executed');
     }
   };
+
+export const userDetails = (payload: any) => (dispatch: Dispatch) => {
+  dispatch({
+    type: LOGIN_SUCCESS,
+    payload
+  });
+};

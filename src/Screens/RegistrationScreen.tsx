@@ -9,10 +9,11 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {register} from '../redux/register/registerAction';
+import { NavigationProp } from '@react-navigation/native';
 
-const RegistrationScreen = ({navigation}) => {
+const RegistrationScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
@@ -35,7 +36,7 @@ const RegistrationScreen = ({navigation}) => {
 
   const handleRegistration = async () => {
     try {
-      await dispatch(register(name, email, phone, password));
+      await (register(name, email, phone, password))(dispatch);
       showAlert(
         'Registration Successful',
         'Your registration was successful. Click OK to proceed to login.',

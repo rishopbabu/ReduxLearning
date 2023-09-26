@@ -1,15 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TextInput, Button, StyleSheet, Alert} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {login} from '../redux/login/loginAction';
 import {StackActions} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const dispatch = useDispatch();
-  const data = useSelector((state: any) => state.data);
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    setUsername('rishop@yopmail.com');
+    setPassword('Rishop@123');
+  });
 
   const showAlert = (title: string, message: string, callback?: () => void) => {
     Alert.alert(title, message, [
@@ -26,7 +30,7 @@ const LoginScreen = ({navigation}) => {
 
   const handleLogin = async () => {
     try {
-      await dispatch(login(username, password));
+      await login(username, password)(dispatch);
       navigation.dispatch(StackActions.replace('My App'));
     } catch (error: any) {
       showAlert('Login Failed', `${error.message}`);

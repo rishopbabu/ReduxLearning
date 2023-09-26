@@ -24,7 +24,7 @@ function MaterialTabs() {
       inactiveColor="#3e2465"
       barStyle={{backgroundColor: '#694fad'}}>
       <Tab.Screen
-        name='Latest Posts'
+        name="Latest Posts"
         component={PostScreen}
         options={{
           tabBarIcon: ({focused}) => (
@@ -40,7 +40,7 @@ function MaterialTabs() {
       />
 
       <Tab.Screen
-        name='My Profile'
+        name="My Profile"
         component={ProfileScreen}
         options={{
           tabBarIcon: ({focused}) => (
@@ -59,11 +59,15 @@ function MaterialTabs() {
 }
 
 const HomeScreen = () => {
+  const responseData = useSelector(
+    (state: any) => state.userDataReducer.payload,
+  );
+  console.log('user data:', responseData);
   return (
     <NavigationContainer independent={true}>
       <MaterialTabs />
     </NavigationContainer>
-  )
+  );
 };
 
 const styles = StyleSheet.create({

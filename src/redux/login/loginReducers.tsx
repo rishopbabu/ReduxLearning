@@ -1,18 +1,16 @@
 import {AuthActionTypes, LOGIN_SUCCESS, LOGIN_FAILURE} from './loginType';
 
 interface AuthState {
-  access_token: string | null;
-  user_details: any | null;
+  payload: any | null;
   error: string | null;
 }
 
 const initialState: AuthState = {
-  access_token: null,
-  user_details: null,
+  payload: null,
   error: null,
 };
 
-const loginReducer = (
+export const loginReducer = (
   state = initialState,
   action: AuthActionTypes,
 ): AuthState => {
@@ -20,15 +18,13 @@ const loginReducer = (
     case LOGIN_SUCCESS:
       return {
         ...state,
-        access_token: action.payload.access_token,
-        user_details: action.payload.user_details,
+        payload: action.payload,
         error: null,
       };
     case LOGIN_FAILURE:
       return {
         ...state,
-        access_token: null,
-        user_details: null,
+        payload: null,
         error: action.payload,
       };
     default:
@@ -36,4 +32,13 @@ const loginReducer = (
   }
 };
 
-export default loginReducer;
+export const userDataReducer = (state: any | null = null, action: AuthActionTypes) => {
+  if (action.type === LOGIN_SUCCESS) {
+    return {
+      payload: action.payload,
+    };
+  } else {
+    return state;
+  }
+  
+};

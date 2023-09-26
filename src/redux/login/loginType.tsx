@@ -9,12 +9,17 @@ interface UserDetails {
   phone: string;
 }
 
+// interface LoginSuccessAction {
+//   type: typeof LOGIN_SUCCESS;
+//   payload: {
+//     access_token: string;
+//     user_details: UserDetails;
+//   };
+// }
+
 interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;
-  payload: {
-    access_token: string;
-    user_details: UserDetails;
-  };
+  payload: any;
 }
 
 interface LoginFailureAction {
