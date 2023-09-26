@@ -27,7 +27,7 @@ const LoginScreen = ({navigation}) => {
   const handleLogin = async () => {
     try {
       await dispatch(login(username, password));
-      navigation.dispatch(StackActions.replace('Home'));
+      navigation.dispatch(StackActions.replace('My App'));
     } catch (error: any) {
       showAlert('Login Failed', `${error.message}`);
     }
