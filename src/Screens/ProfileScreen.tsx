@@ -13,15 +13,50 @@ const ProfileScreen = () => {
 
   console.log('Profile page:', user_details);
   return (
-    <View>
-      <Text>Profile Screen</Text>
-      <View style={{height: 20}} />
-      <Text>Name: {user_details.name}</Text>
-      <Text>email: {user_details.email}</Text>
-      <Text>phone: {user_details.phone}</Text>
-      <Text>Account Created at: {localDateString}</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Profile Page</Text>
+      <View style={styles.userInfoContainer}>
+        <Text style={styles.label}>Name:</Text>
+        <Text style={styles.info}>{user_details.name}</Text>
+      </View>
+      <View style={styles.userInfoContainer}>
+        <Text style={styles.label}>Email:</Text>
+        <Text style={styles.info}>{user_details.email}</Text>
+      </View>
+      <View style={styles.userInfoContainer}>
+        <Text style={styles.label}>Phone:</Text>
+        <Text style={styles.info}>{user_details.phone}</Text>
+      </View>
+      <View style={styles.userInfoContainer}>
+        <Text style={styles.label}>Account Created at:</Text>
+        <Text style={styles.info}>{localDateString}</Text>
+      </View>
     </View>
   );
 };
 
 export default ProfileScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff', // Background color
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  userInfoContainer: {
+    marginBottom: 10,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  info: {
+    fontSize: 16,
+    marginLeft: 10,
+  },
+});

@@ -17,7 +17,7 @@ export const login =
       if (response && response.data) {
         dispatch({
           type: LOGIN_SUCCESS,
-          payload: response.data
+          payload: response.data,
         });
       } else {
         dispatch({
@@ -26,24 +26,18 @@ export const login =
         });
       }
     } catch (error: any) {
-      console.error('API Error:', error.response.data);
       dispatch({
         type: LOGIN_FAILURE,
         payload: error.response.data.detail,
       });
-      console.log(
-        'LOFIN_FAILURE action dispatched with error message:',
-        error.response.data.detail,
-      );
       throw new Error(error.response.data.detail);
     } finally {
-      console.log('Finnaly statement executed');
     }
   };
 
 export const userDetails = (payload: any) => (dispatch: Dispatch) => {
   dispatch({
     type: LOGIN_SUCCESS,
-    payload
+    payload,
   });
 };

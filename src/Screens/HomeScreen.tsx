@@ -59,10 +59,6 @@ function MaterialTabs() {
 }
 
 const HomeScreen = () => {
-  const responseData = useSelector(
-    (state: any) => state.userDataReducer.payload,
-  );
-  console.log('user data:', responseData);
   return (
     <NavigationContainer independent={true}>
       <MaterialTabs />

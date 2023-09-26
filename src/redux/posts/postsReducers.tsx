@@ -5,16 +5,16 @@ import {
 } from './postsTypes';
 
 interface GetPostsState {
-  posts: any | null;
+  post: any | null;
   error: string | null;
 }
 
 const initialState: GetPostsState = {
-  posts: null,
+  post: null,
   error: null,
 };
 
-const getPostsReducer = (
+export const getPostsReducer = (
   state = initialState,
   action: GetPostsActionTypes,
 ): GetPostsState => {
@@ -22,14 +22,14 @@ const getPostsReducer = (
     case GET_POSTS_SUCCESS:
       return {
         ...state,
-        posts: action.payload,
+        post: action.payload,
         error: null,
       };
 
     case GET_POSTS_FAILURE:
       return {
         ...state,
-        posts: null,
+        post: null,
         error: action.payload,
       };
     default:
@@ -37,4 +37,15 @@ const getPostsReducer = (
   }
 };
 
-export default getPostsReducer;
+export const postsDataReducer = (
+  state: any | null = null,
+  action: GetPostsActionTypes,
+) => {
+  if (action.type === GET_POSTS_SUCCESS) {
+    return {
+      payload: action.payload,
+    };
+  } else {
+    return state;
+  }
+};
