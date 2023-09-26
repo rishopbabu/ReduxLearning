@@ -1,5 +1,5 @@
 import {
-  getUsersActionTypes,
+  GetUsersActionTypes,
   GET_ALL_USERS_SUCCESS,
   GET_ALL_USERS_FAILURE,
 } from './usersTypes';
@@ -16,7 +16,7 @@ const initialState: GetUsersState = {
 
 export const getAllUsersReducer = (
   state = initialState,
-  action: getUsersActionTypes,
+  action: GetUsersActionTypes,
 ): GetUsersState => {
   switch (action.type) {
     case GET_ALL_USERS_SUCCESS:
@@ -32,14 +32,15 @@ export const getAllUsersReducer = (
         users: null,
         error: action.payload,
       };
+
     default:
       return state;
   }
 };
 
 export const getAllUserDataReducer = (
-  state: any | null,
-  action: getUsersActionTypes,
+  state: any | null = null,
+  action: GetUsersActionTypes,
 ) => {
   if (action.type === GET_ALL_USERS_SUCCESS) {
     return {

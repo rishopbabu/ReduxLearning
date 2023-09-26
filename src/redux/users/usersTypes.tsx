@@ -19,4 +19,4 @@ interface GetUsersFailure {
   payload: string | null;
 }
 
-export type getUsersActionTypes = GetUsersSuccess | GetUsersFailure;
+export type GetUsersActionTypes = GetUsersSuccess | GetUsersFailure;
