@@ -1,35 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import {View, Text, TextInput, Button, StyleSheet} from 'react-native'
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/login/loginAction';
-import axios from 'axios';
-import { config } from '../Constants';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TextInput, Button, StyleSheet, Alert} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {login} from '../redux/login/loginAction';
+import {StackActions} from '@react-navigation/native';
 
-const LoginScreen = () => {
-    const dispatch = useDispatch();
-    const token = useSelector((state: any) => state.token);
-    const error = useSelector((state: any) => state.error);
-  
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+const LoginScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  const data = useSelector((state: any) => state.data);
 
-    const fetchApi = async () => {
-      try {
-        const res = await axios.get(config.url.BASE_URL)
-        console.log(res.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    fetchApi()
-    setUsername('rishop@yopmail.com')
-    setPassword('Rishop@123')
-  }, []);
+  // useEffect(() => {
+  //   setUsername('rishop@yopmail.com')
+  //   setPassword('Rishop@123')
+  // }, []);
+
+  const showAlert = (title: string, message: string, callback?: () => void) => {
+    Alert.alert(title, message, [
+      {
+        text: 'OK',
+        onPress: () => {
+          if (callback) {
+            callback(); // Execute the callback function (navigate to login)
+          }
+        },
+      },
+    ]);
+  };
 
   const handleLogin = async () => {
-    dispatch(login(username, password));
+    try {
+      await dispatch(login(username, password));
+      navigation.dispatch(StackActions.replace('Home'));
+    } catch (error: any) {
+      showAlert('Login Failed', `${error.message}`);
+    }
+  };
+
+  const handleRegister = async () => {
+    navigation.navigate('SignUp');
   };
 
   return (
@@ -56,7 +66,7 @@ const LoginScreen = () => {
       </View>
       <Button title="Login" onPress={handleLogin} />
       <View style={{height: 5}}></View>
-      <Button title="Register" onPress={handleLogin} />
+      <Button title="Register" onPress={handleRegister} />
     </View>
   );
 };

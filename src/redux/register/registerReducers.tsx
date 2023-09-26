@@ -6,13 +6,13 @@ import {
 } from './registerType';
 
 interface RegisterState {
-  user: null; // Initial user data is null
+  user_detail: null; // Initial user data is null
   loading: false; // Initial loading state is false
   error: null;
 }
 
 const initialState: RegisterState = {
-  user: null, // Initial user data is null
+  user_detail: null, // Initial user data is null
   loading: false, // Initial loading state is false
   error: null,
 };
@@ -29,12 +29,14 @@ const registerReducer = (state = initialState, action: RegisterActionTypes) => {
       return {
         ...state,
         loading: false,
-        user: action.payload, // Store the user data in the state
+        user_detail: action.payload, // Store the user data in the state
+        error: null,
       };
     case REGISTER_FAILURE:
       return {
         ...state,
         loading: false,
+        user_detail: null,
         error: action.payload, // Store the error message in the state
       };
     default:

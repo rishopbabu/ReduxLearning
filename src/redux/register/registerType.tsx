@@ -1,10 +1,10 @@
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
-export const REGISTER_REQUEST = 'REGISTER_REQUEST'
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 
 interface RegisterRequestAction {
-    type: typeof REGISTER_REQUEST
-    payload: boolean
+  type: typeof REGISTER_REQUEST;
+  payload: boolean;
 }
 
 interface RegisterSuccessAction {
@@ -17,4 +17,7 @@ interface RegisterFailureAction {
   payload: string; // Error message
 }
 
-export type RegisterActionTypes = RegisterRequestAction | RegisterSuccessAction | RegisterFailureAction;
+export type RegisterActionTypes =
+  | RegisterRequestAction
+  | RegisterSuccessAction
+  | RegisterFailureAction;

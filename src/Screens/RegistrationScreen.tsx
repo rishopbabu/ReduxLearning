@@ -1,59 +1,99 @@
 // RegistrationScreen.js
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../redux/register/registerAction';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Alert,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {register} from '../redux/register/registerAction';
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({navigation}) => {
   const dispatch = useDispatch();
-
-  const userData = useSelector((state: any) => state.payload);
-  const error = useSelector((state: any) => state.error);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegistration = () => {
-    // Implement registration logic here
-    // You can send the data to your server or perform any necessary validation
-    // For now, we'll simply log the input values
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Phone:', phone);
-    console.log('Password:', password);
-    dispatch(register(name,email,phone,password));
+  const showAlert = (title: string, message: string, callback?: () => void) => {
+    Alert.alert(title, message, [
+      {
+        text: 'OK',
+        onPress: () => {
+          if (callback) {
+            callback(); // Execute the callback function (navigate to login)
+          }
+        },
+      },
+    ]);
+  };
+
+  const handleRegistration = async () => {
+    try {
+      await dispatch(register(name, email, phone, password));
+      showAlert(
+        'Registration Successful',
+        'Your registration was successful. Click OK to proceed to login.',
+        () => {
+          // Navigate to the login screen
+          navigation.navigate('Login');
+        },
+      );
+    } catch (error: any) {
+      showAlert('Registration Failed', `${error.message}`);
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Registration</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        onChangeText={(text) => setName(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={(text) => setEmail(text)}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Phone"
-        onChangeText={(text) => setPhone(text)}
-        keyboardType="phone-pad"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-      />
-      <Button title="Register" onPress={handleRegistration} />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.header}>Register</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Name</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your Name"
+            onChangeText={text => setName(text)}
+            value={name}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Phone</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="number-pad"
+            placeholder="Enter your Phone Number"
+            onChangeText={text => setPhone(text)}
+            value={phone}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>e-Mail</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your Email"
+            onChangeText={text => setEmail(text)}
+            value={email}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your password"
+            onChangeText={text => setPassword(text)}
+            secureTextEntry
+            value={password}
+          />
+        </View>
+        <Button title="Create Account" onPress={handleRegistration} />
+      </View>
+    </ScrollView>
   );
 };
 
@@ -61,19 +101,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    padding: 16,
   },
-  title: {
+  header: {
     fontSize: 24,
-    marginBottom: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  inputContainer: {
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 4,
   },
   input: {
-    width: '80%',
-    height: 40,
-    borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 8,
+    fontSize: 16,
   },
 });
 

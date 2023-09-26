@@ -1,9 +1,20 @@
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+interface UserDetails {
+  created_at: string;
+  email: string;
+  id: number;
+  name: string;
+  phone: string;
+}
+
 interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;
-  payload: string; // Token
+  payload: {
+    access_token: string;
+    user_details: UserDetails;
+  };
 }
 
 interface LoginFailureAction {

@@ -5,7 +5,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_REQUEST,
 } from './registerType';
-import { config } from '../../Constants';
+import {config} from '../../Constants';
 
 export const register =
   (name: string, email: string, phone: string, password: string) =>
@@ -25,16 +25,15 @@ export const register =
 
     try {
       const response = await axios.post(url, userData);
-      console.log('response:', response.data);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: response.data,
       });
     } catch (error: any) {
-      console.error('API Error:', error.response.data);
       dispatch({
         type: REGISTER_FAILURE,
-        payload: error.message,
+        payload: error.response.data.detail,
       });
+      throw new Error(error.response.data.detail);
     }
   };

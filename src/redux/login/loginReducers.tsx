@@ -1,12 +1,14 @@
 import {AuthActionTypes, LOGIN_SUCCESS, LOGIN_FAILURE} from './loginType';
 
 interface AuthState {
-  token: string | null;
+  access_token: string | null;
+  user_details: any | null;
   error: string | null;
 }
 
 const initialState: AuthState = {
-  token: null,
+  access_token: null,
+  user_details: null,
   error: null,
 };
 
@@ -18,13 +20,15 @@ const loginReducer = (
     case LOGIN_SUCCESS:
       return {
         ...state,
-        token: action.payload,
+        access_token: action.payload.access_token,
+        user_details: action.payload.user_details,
         error: null,
       };
     case LOGIN_FAILURE:
       return {
         ...state,
-        token: null,
+        access_token: null,
+        user_details: null,
         error: action.payload,
       };
     default:

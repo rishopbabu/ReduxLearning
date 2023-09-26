@@ -14,17 +14,32 @@ export const login =
 
       const response = await axios.post(url, requestBody.toString());
       console.log('response:', response.data);
-
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: response.data.access_token,
-      });
+      if (response && response.data && response.data.access_token) {
+        const {access_token, user_details} = response.data;
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: {
+            access_token,
+            user_details,
+          },
+        });
+      } else {
+        dispatch({
+          type: LOGIN_FAILURE,
+          payload: 'Invalid response from the server',
+        });
+      }
     } catch (error: any) {
       console.error('API Error:', error.response.data);
       dispatch({
         type: LOGIN_FAILURE,
-        payload: error.message,
+        payload: error.response.data.detail,
       });
+      console.log(
+        'LOFIN_FAILURE action dispatched with error message:',
+        error.response.data.detail,
+      );
+      throw new Error(error.response.data.detail);
     } finally {
       console.log('Finnaly statement executed');
     }
