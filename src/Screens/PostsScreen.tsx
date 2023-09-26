@@ -7,11 +7,11 @@ import {NavigationProp} from '@react-navigation/native';
 const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   
   const access_token = useSelector(
-    (state: any) => state.userDataReducer.payload.access_token,
+    (state: any) => state?.userDataReducer?.payload?.access_token,
   );
   
   const posts_data = useSelector(
-    (state: any) => state.postsDataReducer.payload,
+    (state: any) => state?.postsDataReducer?.payload,
   );
 
   const showAlert = (title: string, message: string, callback?: () => void) => {
@@ -63,7 +63,7 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
           <View style={styles.postContainer}>
             {/* User Detail */}
             <Text style={styles.postUserDetail}>
-              {item.Post.user_detail.name}
+              {item?.Post?.user_detail?.name}
             </Text>
 
             {/* Title */}

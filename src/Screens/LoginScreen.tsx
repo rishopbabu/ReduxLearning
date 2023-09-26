@@ -11,8 +11,8 @@ const LoginScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    setUsername('rishop@yopmail.com');
-    setPassword('Rishop@123');
+    setUsername('dinesh@yopmail.com');
+    setPassword('Dinesh@123');
   });
 
   const showAlert = (title: string, message: string, callback?: () => void) => {
@@ -31,7 +31,7 @@ const LoginScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const handleLogin = async () => {
     try {
       await login(username, password)(dispatch);
-      navigation.dispatch(StackActions.replace('My App'));
+      navigation.dispatch(StackActions.replace('Home'));
     } catch (error: any) {
       showAlert('Login Failed', `${error.message}`);
     }

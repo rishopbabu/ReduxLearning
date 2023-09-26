@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
+import {Image, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import PostScreen from './PostsScreen';
@@ -60,9 +59,7 @@ function MaterialTabs() {
 
 const HomeScreen = () => {
   return (
-    <NavigationContainer independent={true}>
       <MaterialTabs />
-    </NavigationContainer>
   );
 };
 

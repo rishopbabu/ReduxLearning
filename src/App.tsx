@@ -8,6 +8,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from './Screens/LoginScreen';
 import RegistrationScreen from './Screens/RegistrationScreen';
 import HomeScreen from './Screens/HomeScreen';
+import PostScreen from './Screens/PostsScreen';
+import ProfileScreen from './Screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,18 +20,11 @@ const App = () => {
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
-              headerTintColor: '#fff',
-              headerStyle: {
-                backgroundColor: 'blue',
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-              },
-              headerTitleAlign: 'center',
+              headerShown: false,
             }}>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="SignUp" component={RegistrationScreen} />
-            <Stack.Screen name="My App" component={HomeScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

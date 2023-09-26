@@ -1,8 +1,9 @@
 import React from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Button} from 'react-native';
 import {useSelector} from 'react-redux';
+import {StackActions, NavigationProp} from '@react-navigation/native';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const user_details = useSelector(
     (state: any) => state.userDataReducer.payload.user_details,
   );
@@ -11,7 +12,10 @@ const ProfileScreen = () => {
   const date = new Date(dateString);
   const localDateString = date.toLocaleDateString();
 
-  console.log('Profile page:', user_details);
+  const handleLogout = () => {
+    navigation.dispatch(StackActions.replace('Login'));
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Page</Text>
@@ -31,6 +35,15 @@ const ProfileScreen = () => {
         <Text style={styles.label}>Account Created at:</Text>
         <Text style={styles.info}>{localDateString}</Text>
       </View>
+      <View style={{height: 100}}></View>
+
+      <Button
+        title="LogOut"
+        color="#007aff"
+        onPress={() => {
+          handleLogout()
+        }}
+      />
     </View>
   );
 };
