@@ -12,7 +12,6 @@ export const getAllUsers =
       };
       const response = await axios.get(url, {headers});
       getAllUsersData(response.data)(dispatch)
-      console.log("getAllUsersData:", response.data)
       dispatch({
         type: GET_ALL_USERS_SUCCESS,
         payload: response.data,

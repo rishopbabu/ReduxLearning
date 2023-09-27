@@ -4,7 +4,8 @@ const PROD_BASE_URL = 'https://fastapi-rishop.onrender.com/';
 const prod = {
   url: {
     BASE_URL: PROD_BASE_URL,
-    AUTH_URL: PROD_BASE_URL + 'login',
+    AUTH_URL: PROD_BASE_URL + 'auth/login',
+    REFRESH_AUTH_URL: PROD_BASE_URL + 'auth/refresh-token',
     REGISTER_URL: PROD_BASE_URL + 'users/register',
     GET_ALL_USERS_URL: PROD_BASE_URL + 'users/get_all_users',
     GET_USER_BY_ID_URL: PROD_BASE_URL + 'users/get_user/',
@@ -20,7 +21,8 @@ const prod = {
 const dev = {
   url: {
     BASE_URL: DEV_BASE_URL,
-    AUTH_URL: DEV_BASE_URL + 'login',
+    AUTH_URL: DEV_BASE_URL + 'auth/login',
+    REFRESH_AUTH_URL: DEV_BASE_URL + 'auth/refresh-token',
     REGISTER_URL: DEV_BASE_URL + 'users/register',
     GET_ALL_USERS_URL: DEV_BASE_URL + 'users/get_all_users',
     GET_USER_BY_ID_URL: DEV_BASE_URL + 'users/get_user/',

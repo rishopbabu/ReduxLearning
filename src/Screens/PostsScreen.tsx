@@ -15,7 +15,11 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const access_token = useSelector(
     (state: any) => state?.userDataReducer?.payload?.access_token,
   );
-
+  
+  const refresh_token = useSelector(
+    (state: any) => state?.userDataReducer?.payload?.refresh_token,
+  );
+  
   const posts_data = useSelector(
     (state: any) => state?.postsDataReducer?.payload,
   );
@@ -53,12 +57,12 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
           {item?.Post?.user_detail?.name}
         </Text>
 
-        <Text style={styles.postTitle}>{item.Post.title}</Text>
+        <Text style={styles.postTitle}>{item?.Post?.title}</Text>
 
-        <Text style={styles.postContent}>{item.Post.content}</Text>
+        <Text style={styles.postContent}>{item?.Post?.content}</Text>
 
         <View style={styles.voteContainer}>
-          <Text style={styles.postVotes}>Votes: {item.votes}</Text>
+          <Text style={styles.postVotes}>Votes: {item?.votes}</Text>
 
           <View style={styles.voteButtonsContainer}>
             <TouchableOpacity
@@ -100,7 +104,7 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         data={posts_data}
-        keyExtractor={item => item.Post.id.toString()}
+        keyExtractor={item => item?.Post?.id.toString()}
         renderItem={({item}) => flatListComponent(item)}
       />
     </View>
