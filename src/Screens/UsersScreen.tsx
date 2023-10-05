@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList, Alert} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Alert, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllUsers} from '../redux/users/usersAction';
 import {NavigationProp} from '@react-navigation/native';
@@ -18,7 +18,7 @@ export const UsersScreen = ({
   const users_list = useSelector(
     (state: any) => state?.getAllUserDataReducer?.payload,
   );
-
+  console.log("Users_list:", users_list)
   const showAlert = (title: string, message: string, callback?: () => void) => {
     Alert.alert(title, message, [
       {
@@ -43,10 +43,25 @@ export const UsersScreen = ({
     fetchAllUsers();
   }, [access_token, dispatch]);
 
-  const renderItem = ({item}: {item: any}) => (
+  const renderItem = ({ item }: { item: any }) => (
     <View style={styles.item}>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.email}>{item.email}</Text>
+     {item.profile_pic ? (
+      // If profile_pic is not null, display the image
+      <Image
+        source={{ uri: item.profile_pic }}
+        style={styles.profilePicture}
+      />
+    ) : (
+      // If profile_pic is null, you can display a default image or placeholder
+      <Image
+        source={require('../assets/default_profile_picture.png')} // Replace with your default image source
+        style={styles.profilePicture}
+      />
+    )}
+      <View style={styles.details}>
+        <Text style={styles.name}>{item.first_name} {item.last_name}</Text>
+        <Text style={styles.email}>{item.email}</Text>
+      </View>
     </View>
   );
 
@@ -86,6 +101,16 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
     elevation: 2,
+  },
+  profilePicture: {
+    width: 50, // Adjust the width as needed
+    height: 50, // Adjust the height as needed
+    borderRadius: 25, // To make it a circular image, set borderRadius to half of the width and height
+    marginRight: 16, // Add spacing between the profile picture and details
+  },
+  details: {
+    flex: 1, // Allow the details to take up the remaining space
+    flexDirection: 'column'
   },
   name: {
     fontSize: 20,

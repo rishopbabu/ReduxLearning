@@ -4,16 +4,20 @@ import {useDispatch} from 'react-redux';
 import {login} from '../redux/login/loginAction';
 import {StackActions} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+let storageKey = '@user_data';
 
 const LoginScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // useEffect(() => {
-  //   setUsername('dinesh@yopmail.com');
-  //   setPassword('Dinesh@123');
-  // });
+  useEffect(() => {
+    setUsername('rishop@yopmail.com');
+    setPassword('Rishop@123');
+  });
+  
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   
   const checkButtonDisabled = () => {

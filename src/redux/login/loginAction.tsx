@@ -3,6 +3,8 @@ import {Dispatch} from 'redux';
 import {LOGIN_SUCCESS, LOGIN_FAILURE} from './loginType';
 import {config} from '../../Constants';
 
+let loggedInUserData: null = null;
+
 export const login =
   (username: string, password: string) => async (dispatch: Dispatch) => {
     try {
@@ -13,7 +15,7 @@ export const login =
       requestBody.append('password', password);
 
       const response = await axios.post(url, requestBody.toString());
-      console.log("login Response:", response.data)
+      loggedInUserData = response.data;
       userDetails(response.data)(dispatch);
       if (response && response.data) {
         dispatch({
@@ -31,9 +33,10 @@ export const login =
         type: LOGIN_FAILURE,
         payload: error.response._response,
       });
-      console.log("login erroe:", error.response.data.detail)
+      console.log('login error:', error.response.data.detail);
       throw new Error(error.response.data.detail);
     } finally {
+      console.log('loggedInUserData:', loggedInUserData);
     }
   };
 
