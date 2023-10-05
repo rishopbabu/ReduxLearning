@@ -16,10 +16,23 @@ import { NavigationProp } from '@react-navigation/native';
 const RegistrationScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const dispatch = useDispatch();
 
-  const [name, setName] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const checkButtonDisabled = () => {
+    const areAllFieldsFilled =
+      first_name.trim() !== '' &&
+      last_name.trim() !== '' &&
+      email.trim() !== '' &&
+      phone.trim() !== '' &&
+      password.trim() !== '';
+    setIsButtonDisabled(!areAllFieldsFilled);
+  };
 
   const showAlert = (title: string, message: string, callback?: () => void) => {
     Alert.alert(title, message, [
@@ -36,7 +49,7 @@ const RegistrationScreen = ({navigation}: {navigation: NavigationProp<any>}) => 
 
   const handleRegistration = async () => {
     try {
-      await (register(name, email, phone, password))(dispatch);
+      await (register(first_name, last_name, email, phone, password))(dispatch);
       showAlert(
         'Registration Successful',
         'Your registration was successful. Click OK to proceed to login.',
@@ -55,12 +68,21 @@ const RegistrationScreen = ({navigation}: {navigation: NavigationProp<any>}) => 
       <View style={styles.container}>
         <Text style={styles.header}>Register</Text>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={styles.label}>First Name</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your Name"
-            onChangeText={text => setName(text)}
-            value={name}
+            onChangeText={text => {setFirstName(text), checkButtonDisabled()}}
+            value={first_name}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Last Name</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your Name"
+            onChangeText={text => {setLastName(text), checkButtonDisabled()}}
+            value={last_name}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -69,7 +91,7 @@ const RegistrationScreen = ({navigation}: {navigation: NavigationProp<any>}) => 
             style={styles.input}
             keyboardType="number-pad"
             placeholder="Enter your Phone Number"
-            onChangeText={text => setPhone(text)}
+            onChangeText={text => {setPhone(text), checkButtonDisabled()}}
             value={phone}
           />
         </View>
@@ -78,7 +100,7 @@ const RegistrationScreen = ({navigation}: {navigation: NavigationProp<any>}) => 
           <TextInput
             style={styles.input}
             placeholder="Enter your Email"
-            onChangeText={text => setEmail(text)}
+            onChangeText={text => {setEmail(text), checkButtonDisabled()}}
             value={email}
           />
         </View>
@@ -87,12 +109,12 @@ const RegistrationScreen = ({navigation}: {navigation: NavigationProp<any>}) => 
           <TextInput
             style={styles.input}
             placeholder="Enter your password"
-            onChangeText={text => setPassword(text)}
+            onChangeText={text => {setPassword(text), checkButtonDisabled()}}
             secureTextEntry
             value={password}
           />
         </View>
-        <Button title="Create Account" onPress={handleRegistration} />
+        <Button title="Create Account" onPress={handleRegistration} disabled={isButtonDisabled} />
       </View>
     </ScrollView>
   );

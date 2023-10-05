@@ -10,10 +10,16 @@ const LoginScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    setUsername('dinesh@yopmail.com');
-    setPassword('Dinesh@123');
-  });
+  // useEffect(() => {
+  //   setUsername('dinesh@yopmail.com');
+  //   setPassword('Dinesh@123');
+  // });
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  
+  const checkButtonDisabled = () => {
+    const areAllFieldsFilled = username.trim() !== '' && password.trim() !== '';
+    setIsButtonDisabled(!areAllFieldsFilled);
+  };
 
   const showAlert = (title: string, message: string, callback?: () => void) => {
     Alert.alert(title, message, [
@@ -49,7 +55,7 @@ const LoginScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
         <TextInput
           style={styles.input}
           placeholder="Enter your e-Mail"
-          onChangeText={text => setUsername(text)}
+          onChangeText={text => {setUsername(text), checkButtonDisabled()}}
           value={username}
         />
       </View>
@@ -58,14 +64,14 @@ const LoginScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
         <TextInput
           style={styles.input}
           placeholder="Enter your password"
-          onChangeText={text => setPassword(text)}
+          onChangeText={text => {setPassword(text), checkButtonDisabled()}}
           secureTextEntry
           value={password}
         />
       </View>
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Login" onPress={handleLogin} disabled={isButtonDisabled} />
       <View style={{height: 5}}></View>
-      <Button title="Register" onPress={handleRegister} />
+      <Button title="Register" onPress={handleRegister}/>
     </View>
   );
 };
