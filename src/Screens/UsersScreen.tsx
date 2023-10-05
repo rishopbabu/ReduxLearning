@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, FlatList, Alert, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllUsers} from '../redux/users/usersAction';
 import {NavigationProp} from '@react-navigation/native';
+import { config } from '../Constants';
 
 export const UsersScreen = ({
   navigation,
@@ -43,16 +44,24 @@ export const UsersScreen = ({
     fetchAllUsers();
   }, [access_token, dispatch]);
 
+
+  // const imagePath = config.url.BASE_URL+'/'
+  // console.log("imagepath:", imagePath)
+  
   const renderItem = ({ item }: { item: any }) => (
     <View style={styles.item}>
      {item.profile_pic ? (
-      // If profile_pic is not null, display the image
       <Image
         source={{ uri: item.profile_pic }}
         style={styles.profilePicture}
+        onError={() => {
+          console.log('Error loading image:', item.profile_pic);
+        }}
+        onLoad={() => {
+          console.log('Image loaded successfully:', item.profile_pic);
+        }}
       />
     ) : (
-      // If profile_pic is null, you can display a default image or placeholder
       <Image
         source={require('../assets/default_profile_picture.png')} // Replace with your default image source
         style={styles.profilePicture}
