@@ -1,87 +1,64 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Alert,
+  Image,
+  ActivityIndicator,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllPosts} from '../redux/posts/postsAction';
 import {NavigationProp} from '@react-navigation/native';
 
 const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
+  const dispatch = useDispatch();
+
   const access_token = useSelector(
     (state: any) => state?.userDataReducer?.payload?.access_token,
   );
-  
-  const refresh_token = useSelector(
-    (state: any) => state?.userDataReducer?.payload?.refresh_token,
-  );
-  
+
   const posts_data = useSelector(
     (state: any) => state?.postsDataReducer?.payload,
   );
-
-  const showAlert = (title: string, message: string, callback?: () => void) => {
-    Alert.alert(title, message, [
-      {
-        text: 'OK',
-        onPress: () => {
-          if (callback) {
-            callback(); // Execute the callback function (navigate to login)
-          }
-        },
-      },
-    ]);
-  };
-
-  const dispatch = useDispatch();
-
+  console.log("posts_data:", posts_data?.post_details)
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
         await getAllPosts(access_token)(dispatch);
       } catch (error: any) {
-        showAlert('Some Error:', `${error.message}`);
+        console.error('Error fetching posts:', error);
+        // Handle error
+      } finally {
       }
     };
     fetchAllPosts();
-  }, []);
+  }, [dispatch]);
 
-  const flatListComponent = (item: any) => {
+  const renderItem = ({item}: {item: any}) => {
     return (
       <View style={styles.postContainer}>
-        <Text style={styles.postUserDetail}>
-          {item?.Post?.user_detail?.name}
-        </Text>
-
-        <Text style={styles.postTitle}>{item?.Post?.title}</Text>
-
-        <Text style={styles.postContent}>{item?.Post?.content}</Text>
-
-        <View style={styles.voteContainer}>
-          <Text style={styles.postVotes}>Votes: {item?.votes}</Text>
-
-          <View style={styles.voteButtonsContainer}>
-            <TouchableOpacity
-              style={styles.voteButton}
-              onPress={() => {
-                // Implement the plus button functionality
-              }}>
-              <Text style={styles.voteButtonText}>Like</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.voteButton}
-              onPress={() => {
-                // Implement the share button functionality
-              }}>
-              <Text style={styles.voteButtonText}>Share</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.postHeader}>
+          <Image
+            source={{
+              uri: `data:image/jpeg;base64,${item?.user_detail?.profile_pic}`,
+            }}
+            style={styles.profilePicture}
+          />
+          <Text style={styles.username}>
+            {item?.user_detail?.first_name} {item?.user_detail?.last_name}
+          </Text>
         </View>
+
+        <Image
+          source={{uri: `data:image/jpeg;base64,${item?.post_image}`}}
+          style={styles.postImage}
+        />
+
+        <Text style={styles.caption}>{item?.caption}</Text>
+
+        <Text style={styles.likes}>{`${item?.votes} likes`}</Text>
       </View>
     );
   };
@@ -101,11 +78,12 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
           <Text style={styles.createPostButtonText}>➕ Create Post</Text>
         </TouchableOpacity>
       </View>
+
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={posts_data}
-        keyExtractor={item => item?.Post?.id.toString()}
-        renderItem={({item}) => flatListComponent(item)}
+        data={posts_data.post_details}
+        keyExtractor={item => item?.post_details?.post_id.toString()}
+        renderItem={renderItem}
       />
     </View>
   );
@@ -117,6 +95,48 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#f2f2f2',
   },
+  postContainer: {
+    marginBottom: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  postHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  profilePicture: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  username: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  postImage: {
+    width: '100%',
+    height: 300,
+  },
+  caption: {
+    padding: 10,
+    fontSize: 16,
+  },
+  likes: {
+    marginLeft: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -125,7 +145,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
     marginBottom: 16,
   },
   createPostButton: {
@@ -142,59 +161,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     marginLeft: 8,
-  },
-  postContainer: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 16,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  postUserDetail: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  postTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  postContent: {
-    fontSize: 18,
-    marginBottom: 16,
-  },
-  voteContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  postVotes: {
-    fontSize: 18,
-    color: 'blue',
-  },
-  voteButtonsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  voteButton: {
-    backgroundColor: '#007aff',
-    borderRadius: 20,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    marginHorizontal: 8,
-  },
-  voteButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 

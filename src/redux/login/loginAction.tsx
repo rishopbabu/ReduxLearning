@@ -16,6 +16,7 @@ export const login =
 
       const response = await axios.post(url, requestBody.toString());
       loggedInUserData = response.data;
+      
       userDetails(response.data)(dispatch);
       if (response && response.data) {
         dispatch({
@@ -36,7 +37,7 @@ export const login =
       console.log('login error:', error.response.data.detail);
       throw new Error(error.response.data.detail);
     } finally {
-      console.log('loggedInUserData:', loggedInUserData);
+      
     }
   };
 

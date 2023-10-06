@@ -11,6 +11,7 @@ export const getAllPosts =
         Authorization: `Bearer ${access_token}`,
       };
       const response = await axios.get(url, {headers});
+      
       getAllPostsData(response.data)(dispatch);
       dispatch({
         type: GET_POSTS_SUCCESS,
