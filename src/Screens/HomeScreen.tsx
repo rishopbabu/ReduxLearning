@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import PostScreen from './PostsScreen';
 import ProfileScreen from './ProfileScreen';
@@ -31,8 +30,8 @@ function MaterialTabs() {
             <CustomTabIcon
               imageSource={
                 focused
-                  ? require('/Users/mac-obs-51/Documents/RN Learning/ReduxLearning/src/assets/signpost.and.arrowtriangle.up.circle.fill.png')
-                  : require('/Users/mac-obs-51/Documents/RN Learning/ReduxLearning/src/assets/signpost.and.arrowtriangle.up.circle.png')
+                  ? require('/Users/mac-obs-51/Documents/RNLearning/ReduxLearning/src/assets/signpost.and.arrowtriangle.up.circle.fill.png')
+                  : require('/Users/mac-obs-51/Documents/RNLearning/ReduxLearning/src/assets/signpost.and.arrowtriangle.up.circle.png')
               }
             />
           ),
@@ -46,8 +45,8 @@ function MaterialTabs() {
             <CustomTabIcon
               imageSource={
                 focused
-                  ? require('/Users/mac-obs-51/Documents/RN Learning/ReduxLearning/src/assets/person.3.fill.png')
-                  : require('/Users/mac-obs-51/Documents/RN Learning/ReduxLearning/src/assets/person.3.sequence.png')
+                  ? require('/Users/mac-obs-51/Documents/RNLearning/ReduxLearning/src/assets/person.3.fill.png')
+                  : require('/Users/mac-obs-51/Documents/RNLearning/ReduxLearning/src/assets/person.3.sequence.png')
               }
             />
           ),
@@ -62,8 +61,8 @@ function MaterialTabs() {
             <CustomTabIcon
               imageSource={
                 focused
-                  ? require('/Users/mac-obs-51/Documents/RN Learning/ReduxLearning/src/assets/person.crop.circle.fill.png')
-                  : require('/Users/mac-obs-51/Documents/RN Learning/ReduxLearning/src/assets/person.crop.circle.png')
+                  ? require('/Users/mac-obs-51/Documents/RNLearning/ReduxLearning/src/assets/person.crop.circle.fill.png')
+                  : require('/Users/mac-obs-51/Documents/RNLearning/ReduxLearning/src/assets/person.crop.circle.png')
               }
             />
           ),
