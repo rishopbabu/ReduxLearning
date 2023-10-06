@@ -22,7 +22,7 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const posts_data = useSelector(
     (state: any) => state?.postsDataReducer?.payload,
   );
-  console.log("posts_data:", posts_data?.post_details)
+  console.log('posts_data:', posts_data?.post_details);
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
@@ -40,12 +40,22 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
     return (
       <View style={styles.postContainer}>
         <View style={styles.postHeader}>
-          <Image
-            source={{
-              uri: `data:image/jpeg;base64,${item?.user_detail?.profile_pic}`,
-            }}
-            style={styles.profilePicture}
-          />
+          {item?.user_detail?.profile_pic ? (
+            <Image
+              source={{
+                uri: `data:image/jpeg;base64,${item?.user_detail?.profile_pic}`,
+              }}
+              style={styles.profilePicture}
+              onError={() => {}}
+              onLoad={() => {}}
+            />
+          ) : (
+            <Image
+              source={require('../assets/default_profile_picture.png')}
+              style={styles.profilePicture}
+            />
+          )}
+
           <Text style={styles.username}>
             {item?.user_detail?.first_name} {item?.user_detail?.last_name}
           </Text>
@@ -81,8 +91,8 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
 
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={posts_data.post_details}
-        keyExtractor={item => item?.post_details?.post_id.toString()}
+        data={posts_data?.post_details}
+        keyExtractor={item => item?.post_id.toString()}
         renderItem={renderItem}
       />
     </View>
