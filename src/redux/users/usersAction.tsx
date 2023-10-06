@@ -11,7 +11,7 @@ export const getAllUsers =
         Authorization: `Bearer ${access_token}`,
       };
       const response = await axios.get(url, {headers});
-      console.log("users response:", response.data.users_list)
+      
       getAllUsersData(response.data)(dispatch)
       dispatch({
         type: GET_ALL_USERS_SUCCESS,
