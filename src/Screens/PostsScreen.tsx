@@ -18,7 +18,7 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const access_token = useSelector(
     (state: any) => state?.userDataReducer?.payload?.access_token,
   );
-
+  
   const posts_data = useSelector(
     (state: any) => state?.postsDataReducer?.payload,
   );

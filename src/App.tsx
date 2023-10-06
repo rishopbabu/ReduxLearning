@@ -17,9 +17,10 @@ const App = () => {
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}>
+            screenOptions={({ route }) => ({
+              headerShown: true,
+              title: route.name === 'Home' ? 'Home' : 'SocialApp', // Change the title based on the route name
+            })}>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="SignUp" component={RegistrationScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
