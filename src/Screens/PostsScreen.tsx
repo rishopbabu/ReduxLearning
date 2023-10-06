@@ -22,7 +22,7 @@ const PostScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   const posts_data = useSelector(
     (state: any) => state?.postsDataReducer?.payload,
   );
-  console.log('posts_data:', posts_data?.post_details);
+  
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
