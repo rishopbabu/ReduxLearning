@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, Button, Image} from 'react-native';
 import {useSelector} from 'react-redux';
 import {StackActions, NavigationProp} from '@react-navigation/native';
 
@@ -9,7 +9,6 @@ const ProfileScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   );
 
   const user = user_details.user_detail
-  console.log("aa",user)
   const dateString = user.updated_by;
   const date = new Date(dateString);
   const localDateString = date.toLocaleDateString();
@@ -22,6 +21,19 @@ const ProfileScreen = ({navigation}: {navigation: NavigationProp<any>}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Page</Text>
+      <View style={styles.profilePictureContainer}>
+        {user.profile_pic ? (
+          <Image
+            source={{ uri: `data:image/jpeg;base64,${user.profile_pic}` }}
+            style={styles.profilePicture}
+          />
+        ) : (
+          <Image
+            source={require('../assets/default_profile_picture.png')} // Replace with your default image source
+            style={styles.profilePicture}
+          />
+        )}
+      </View>
       <View style={styles.userInfoContainer}>
         <Text style={styles.label}>First Name:</Text>
         <Text style={styles.info}>{user.first_name}</Text>
@@ -78,5 +90,16 @@ const styles = StyleSheet.create({
   info: {
     fontSize: 16,
     marginLeft: 10,
+  },
+
+  profilePictureContainer: {
+    marginBottom: 20, // Adjust the margin as needed
+    alignItems: 'center', // Center the profile picture horizontally
+  },
+
+  profilePicture: {
+    width: 150,
+    height: 150,
+    borderRadius: 75, // Make it a circle
   },
 });
